@@ -3,8 +3,8 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface IProduct extends Document {
   title: String;
   image: String;
-  price: Number;
-  stock: Number;
+  price: number;
+  stock: number;
 }
 
 const productSchema = new Schema<IProduct>({

@@ -4,16 +4,16 @@ import { EnumType } from "typescript";
 
 const cartStatusEnum = ["active", "completed"];
 
-export interface ICartItem extends Document {
+export interface ICartItem {
   product: IProduct;
-  unitPrice: Number;
-  quantity: Number;
+  unitPrice: number;
+  quantity: number;
 }
 
 export interface ICart extends Document {
   userId: ObjectId | String;
   items: ICartItem[];
-  totalAmount: Number;
+  totalAmount: number;
   status: "active" | "completed";
 }
 
