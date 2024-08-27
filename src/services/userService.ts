@@ -1,6 +1,7 @@
 import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import("dotenv/config");
 
 interface RegisterParams {
   firstName: string;
@@ -58,5 +59,5 @@ export const login = async ({ email, password }: LoginParams) => {
 };
 
 const generateJWT = (data: any) => {
-  return jwt.sign(data, "HRnCX8K7fJ5UlXhWbLwnJsOSBGbSI8bC");
+  return jwt.sign(data, process.env.JWT_SECRET || "");
 };
