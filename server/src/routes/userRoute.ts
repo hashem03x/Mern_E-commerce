@@ -12,13 +12,13 @@ router.post("/register", async (request, response) => {
     password,
   });
 
-  response.status(statusCode).send(data);
+  response.status(statusCode).json(data);
 });
 
 router.post("/login", async (request, response) => {
   const { email, password } = request.body;
   const { statusCode, data } = await login({ email, password });
-  response.status(statusCode).send(data);
+  response.status(statusCode).json(data);
 });
 
 export default router;

@@ -10,6 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useAuth } from "../context/Authcontext";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -17,6 +18,10 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const { userName, token } = useAuth();
+
+  console.log("FROM NAVBAR", userName, token);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
