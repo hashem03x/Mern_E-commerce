@@ -5,11 +5,14 @@ import userRoute from "./routes/userRoute";
 import productRoute from "./routes/productRoute";
 import cartRoute from "./routes/cartRoute";
 import { seedInitialProducts } from "./services/productService";
+import cors from "cors";
+dotenv.config();
 
 const app = express();
 const port = 3001;
-dotenv.config();
+
 app.use(express.json());
+app.use(cors());
 
 mongoose
   .connect(process.env.DATABAE_URL || "")
