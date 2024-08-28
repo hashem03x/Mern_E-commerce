@@ -10,9 +10,10 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useAuth } from "../context/Authcontext";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Navbar() {
     null
   );
 
-  const { userName, isAuthenticated } = useAuth();
+  const { userName, isAuthenticated, logout } = useAuth();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -33,6 +34,16 @@ function Navbar() {
 
   const handleLogin = () => {
     navigate("/login");
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    handleCloseUserMenu();
+  };
+
+  const handleCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -70,7 +81,16 @@ function Navbar() {
               </Typography>
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
+            <Box display="flex" alignItems="center">
+              <IconButton
+                onClick={handleCart}
+                sx={{ marginRight: 2, color: "white" }}
+                aria-label="cart"
+              >
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
               {isAuthenticated ? (
                 <>
                   <Tooltip title="Open settings">
@@ -104,7 +124,9 @@ function Navbar() {
                       <Typography textAlign="center">My Orders</Typography>
                     </MenuItem>
                     <MenuItem>
-                      <Typography textAlign="center">Log Out</Typography>
+                      <Typography onClick={handleLogout} textAlign="center">
+                        Log Out
+                      </Typography>
                     </MenuItem>
                   </Menu>
                 </>

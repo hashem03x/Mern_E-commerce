@@ -33,7 +33,7 @@ function HomePage() {
     );
 
   return (
-    <Container sx={{ mt: 3 }}>
+    <Container sx={{ mt: 3, pt: 4, pb: 4 }}>
       <Grid spacing={3} container>
         {products.map((product) => (
           <Grid key={product._id} item md={4} xs={6} height={"fit-content"}>
