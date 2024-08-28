@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../constants/base_URL";
-import { useAuth } from "../context/Authcontext";
+import { useAuth } from "../context/Authentication/Authcontext";
 
 function CartPage() {
   const [cart, setCart] = useState([]);
@@ -22,10 +22,9 @@ function CartPage() {
       }
       const data = await response.json();
       setCart(data);
-      console.log(cart);
     };
     fetchCart();
-  }, []);
+  }, [token]);
 
   return (
     <Container sx={{ marginTop: 4 }}>

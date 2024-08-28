@@ -1,15 +1,19 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
-import { useAuth } from "../context/Authcontext";
+import { useAuth } from "../context/Authentication/Authcontext";
 import { Password } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [error, setError] = useState("");
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    <Navigate to="/" replace />;
+  }
 
   const onSubmit = async () => {
     const email = emailRef.current?.value;
@@ -85,8 +89,18 @@ function LoginPage() {
           inputRef={passwordRef}
         />
         <Button onClick={onSubmit} variant="contained">
-          Register
+          Login
         </Button>
+        <Link
+          style={{
+            textDecoration: "none",
+            textAlign: "center",
+            fontSize: "16px",
+          }}
+          to="/register"
+        >
+          New User? Create an account
+        </Link>
         {error && (
           <Typography sx={{ textAlign: "center", color: "red" }}>
             {error}
