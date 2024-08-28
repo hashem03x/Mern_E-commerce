@@ -4,39 +4,34 @@ import { useAuth } from "../context/Authcontext";
 import { Password } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
+function LoginPage() {
   const [error, setError] = useState("");
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async () => {
-    const firstName = firstNameRef.current?.value;
-    const lastName = lastNameRef.current?.value;
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
+
     // Validating Form Data
 
-    if (!firstName || !lastName || !email || !Password) {
+    if (!email || !Password) {
       setError("Please Fill Out All Fileds ");
       return;
     }
-    const response = await fetch("http://localhost:3001/user/register", {
+    const response = await fetch("http://localhost:3001/user/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstName,
-        lastName,
         email,
         password,
       }),
     });
 
     if (!response.ok) {
-      setError("Unable to Register User , Please Try Different Credintials");
+      setError("Unable to Login , Please Check your Cerintials");
       return;
     }
 
@@ -71,21 +66,8 @@ function RegisterPage() {
           width: "350px",
         }}
       >
-        <Typography variant="h5">Register a New User</Typography>
-        <TextField
-          id="outlined-basic"
-          label="First Name"
-          name="firstname"
-          variant="outlined"
-          inputRef={firstNameRef}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Last Name"
-          name="lastname"
-          variant="outlined"
-          inputRef={lastNameRef}
-        />
+        <Typography variant="h5">Login</Typography>
+
         <TextField
           id="outlined-basic"
           label="Email"
@@ -115,4 +97,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default LoginPage;
