@@ -15,11 +15,20 @@ const createCartForUser = async ({ userId }: IcreateCartForUser) => {
 // Getting Active Cart For User
 interface IGetActiveCartForUser {
   userId: string;
+  populateProducts?: boolean;
 }
 export const getActiveCartForUser = async ({
   userId,
+  populateProducts,
 }: IGetActiveCartForUser) => {
-  let cart = await cartModel.findOne({ userId, status: "active" });
+  let cart;
+  if (populateProducts) {
+    cart = await cartModel
+      .findOne({ userId, status: "active" })
+      .populate("items.product");
+  } else {
+    cart = await cartModel.findOne({ userId, status: "active" });
+  }
 
   if (!cart) {
     cart = await createCartForUser({ userId });
@@ -77,9 +86,12 @@ export const addItemToCart = async ({
 
   cart.totalAmount += product.price * quantity;
 
-  const updatedCart = await cart.save();
+  await cart.save();
 
-  return { data: updatedCart, statusCode: 200 };
+  return {
+    data: await getActiveCartForUser({ userId, populateProducts: true }),
+    statusCode: 200,
+  };
 };
 
 // Update Item In Cart For User
@@ -125,8 +137,11 @@ export const updateItemInCart = async ({
   total += existInCart.quantity * existInCart.unitPrice;
   cart.totalAmount = total;
 
-  const updatedCart = await cart.save();
-  return { data: updatedCart, statusCode: 200 };
+  await cart.save();
+  return {
+    data: await getActiveCartForUser({ userId, populateProducts: true }),
+    statusCode: 200,
+  };
 };
 
 // Delete Item In Cart For User
@@ -165,8 +180,11 @@ export const deleteItemInCart = async ({
   cart.items = otherCartItems;
   cart.totalAmount = total;
 
-  const updatedCart = await cart.save();
-  return { data: updatedCart, statusCode: 200 };
+  await cart.save();
+  return {
+    data: await getActiveCartForUser({ userId, populateProducts: true }),
+    statusCode: 200,
+  };
 };
 
 interface ICheckout {
