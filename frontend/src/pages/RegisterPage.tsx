@@ -13,7 +13,7 @@ function RegisterPage() {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   if (isAuthenticated) {
-    <Navigate to="/" replace />;
+    return <Navigate to="/" replace />;
   }
   const onSubmit = async () => {
     const firstName = firstNameRef.current?.value;

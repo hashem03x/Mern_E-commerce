@@ -12,7 +12,7 @@ function LoginPage() {
   const navigate = useNavigate();
 
   if (isAuthenticated) {
-    <Navigate to="/" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const onSubmit = async () => {

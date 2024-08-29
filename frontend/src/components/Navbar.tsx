@@ -14,6 +14,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useAuth } from "../context/Authentication/Authcontext";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge, Button } from "@mui/material";
+import { useCart } from "../context/Cart/CartContext";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -45,6 +46,8 @@ function Navbar() {
   const handleCart = () => {
     navigate("/cart");
   };
+
+  const { cartItems } = useCart();
 
   return (
     <AppBar position="static">
@@ -87,7 +90,7 @@ function Navbar() {
                 sx={{ marginRight: 2, color: "white" }}
                 aria-label="cart"
               >
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={cartItems.length} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
