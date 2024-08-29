@@ -128,6 +128,32 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       setError("Something Went Wrong while Deleting Item");
     }
   };
+
+  // Function To Clear All Items From Cart
+  const clearCartItems = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/cart/`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        setError("Failed To Empty Cart");
+        return;
+      }
+      const cart = await response.json();
+      if (!cart) {
+        setError("Failed to Empty cart ");
+      }
+      setCartItems([]);
+      setTotalAmount(0);
+    } catch {
+      setError("Something Went Wrong while Deleting Item");
+    }
+  };
+
   // UseEffect to Handle Loading items in cart
   useEffect(() => {
     if (!token) return;
@@ -164,6 +190,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
         addItemToCart,
         updateItemInCart,
         deleteItemInCart,
+        clearCartItems,
         totalAmount,
       }}
     >

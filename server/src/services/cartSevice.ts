@@ -44,8 +44,11 @@ export const emptyCart = async ({ userId }: IEmptyCart) => {
   const cart = await getActiveCartForUser({ userId });
   cart.items = [];
   cart.totalAmount = 0;
-  const updatedCart = await cart.save();
-  return { data: updatedCart, statusCode: 200 };
+  await cart.save();
+  return {
+    data: await getActiveCartForUser({ userId, populateProducts: true }),
+    statusCode: 200,
+  };
 };
 
 // Adding Items To Cart
