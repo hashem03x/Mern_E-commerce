@@ -3,7 +3,9 @@ import { Box, Container, Typography } from "@mui/material";
 import { useCart } from "../context/Cart/CartContext";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import { useNavigate } from "react-router-dom";
 function CartPage() {
+  const navigate = useNavigate();
   const {
     totalAmount,
     cartItems,
@@ -18,6 +20,9 @@ function CartPage() {
   };
   const handleItemDelete = (productId: string) => {
     deleteItemInCart(productId);
+  };
+  const handlecheckout = () => {
+    navigate("/checkout");
   };
   const clearCart = () => {
     clearCartItems();
@@ -122,7 +127,27 @@ function CartPage() {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h4">Total Amount: {totalAmount}EGP</Typography>
+          <Box
+            sx={{
+              backgroundColor: "#1976D2",
+              width: "100%",
+              p: 4,
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h4">Total Amount: {totalAmount}EGP</Typography>
+            <Button
+              onClick={() => handlecheckout()}
+              variant="contained"
+              color="success"
+              size="large"
+            >
+              Checkout
+            </Button>
+          </Box>
         </Box>
       )}
     </Container>
