@@ -47,6 +47,10 @@ function Navbar() {
     navigate("/cart");
   };
 
+  const handleMyOrders = () => {
+    navigate("/my-orders");
+  };
+
   const { cartItems } = useCart();
 
   return (
@@ -124,7 +128,9 @@ function Navbar() {
                     onClose={handleCloseUserMenu}
                   >
                     <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">My Orders</Typography>
+                      <Typography textAlign="center" onClick={handleMyOrders}>
+                        My Orders
+                      </Typography>
                     </MenuItem>
                     <MenuItem>
                       <Typography onClick={handleLogout} textAlign="center">

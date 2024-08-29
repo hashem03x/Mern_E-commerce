@@ -1,6 +1,7 @@
 import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { orderModel } from "../models/orderModel";
 import("dotenv/config");
 
 interface RegisterParams {
@@ -56,6 +57,18 @@ export const login = async ({ email, password }: LoginParams) => {
     };
   }
   return { data: "Incorrect Email or Password", statusCode: 400 };
+};
+
+interface myOrdersParams {
+  userId: string;
+}
+
+export const getMyOrders = async ({ userId }: myOrdersParams) => {
+  try {
+    return { data: await orderModel.find({ userId }), statusCode: 200 };
+  } catch (error) {
+    throw error;
+  }
 };
 
 const generateJWT = (data: any) => {

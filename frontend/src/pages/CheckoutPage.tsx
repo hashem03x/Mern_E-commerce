@@ -2,19 +2,12 @@ import { Box, Container, TextField, Typography } from "@mui/material";
 
 import { useCart } from "../context/Cart/CartContext";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/Authentication/Authcontext";
 import { BASE_URL } from "../constants/base_URL";
 import { useNavigate } from "react-router-dom";
 function CheckoutPage() {
-  const {
-    totalAmount,
-    cartItems,
-    updateItemInCart,
-    deleteItemInCart,
-    clearCartItems,
-  } = useCart();
+  const { totalAmount, cartItems, clearCartItems } = useCart();
   const [error, setError] = useState(false);
   const addressRef = useRef<HTMLInputElement>();
   const { token } = useAuth();
@@ -40,7 +33,8 @@ function CheckoutPage() {
     if (!response.ok) {
       return;
     }
-    setError(true);
+    setError(false);
+    clearCartItems();
     navigate("/order-success");
   };
 
